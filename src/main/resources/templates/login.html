@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; display: flex; min-height: 100vh; }
+        .form-side { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px; background: #fff; }
+        .form-container { width: 100%; max-width: 400px; }
+        .logo { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+        .logo-icon { font-size: 32px; }
+        .logo-text { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+        h1 { font-size: 28px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
+        .subtitle { color: #666; font-size: 14px; margin-bottom: 28px; }
+        .error-msg { background: #fff5f5; border: 1px solid #fed7d7; color: #c53030; padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 16px; }
+        .form-group { margin-bottom: 18px; }
+        .form-label { display: block; font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; }
+        .form-input { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+        .form-input:focus { border-color: #1a1a1a; }
+        .btn-login { width: 100%; padding: 12px; background: #1a1a1a; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+        .btn-login:hover { background: #333; }
+        .links { margin-top: 20px; text-align: center; font-size: 13px; }
+        .links a { color: #1a1a1a; text-decoration: underline; }
+        .dark-side { width: 420px; background: #1a1a1a; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; color: #fff; }
+        .dark-icon { font-size: 64px; margin-bottom: 24px; }
+        .dark-title { font-size: 26px; font-weight: 700; text-align: center; line-height: 1.4; margin-bottom: 16px; }
+        .dark-subtitle { font-size: 14px; color: #aaa; text-align: center; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+<!-- 左側フォーム -->
+<div class="form-side">
+    <div class="form-container">
+        <div class="logo">
+            <div class="logo-icon">🍱</div>
+            <span class="logo-text">食事記録アプリ</span>
+        </div>
+
+        <h1>ログイン</h1>
+        <p class="subtitle">アカウントにサインインしてください</p>
+
+        <div th:if="${param.error}" class="error-msg">
+            メールアドレスまたはパスワードが違います。
+        </div>
+        <div th:if="${param.logout}" style="background:#f0fff4;border:1px solid #c6f6d5;color:#2f855a;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:16px;">
+            ログアウトしました。
+        </div>
+        <div th:if="${param.registered}" style="background:#f0fff4;border:1px solid #c6f6d5;color:#2f855a;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:16px;">
+            登録が完了しました。ログインしてください。
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label class="form-label">メールアドレス</label>
+                <input type="email" name="email" class="form-input" placeholder="user@example.com" required />
+            </div>
+            <div class="form-group">
+                <label class="form-label">パスワード</label>
+                <input type="password" name="password" class="form-input" placeholder="••••••••" required />
+            </div>
+            <button type="submit" class="btn-login">ログイン →</button>
+        </form>
+
+        <div class="links">
+            <a th:href="@{/register}">アカウントをお持ちでない方はこちら</a>
+        </div>
+    </div>
+</div>
+
+<!-- 右側ダークパネル -->
+<div class="dark-side">
+    <div class="dark-icon">🍱</div>
+    <div class="dark-title">食事を記録して<br>健康管理をはじめよう</div>
+    <div class="dark-subtitle">毎日の食事を記録することで<br>栄養バランスを把握できます</div>
+</div>
+
+</body>
+</html>
